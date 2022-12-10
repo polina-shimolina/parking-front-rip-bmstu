@@ -1,19 +1,35 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Provider} from "react-redux"
+import Header from "./components/Header";
+import Parking from "./components/Parking";
+import CurrentParking from "./components/CurrentParking";
+import About from "./components/About";
+import {store} from "./components/store";
 
+function App() {
 
-const About = () => {
     return (
-        <div>
-            <div><Link to='/'>Главная</Link> / <Link to="/about">О сервисе</Link>
-                <p></p></div>
-            <h2>О сервисе</h2>
-            <p></p>
-            <div><p>Инфо о сервисе</p>
-                <p>Еще инфо о сервисе</p></div>
-        </div>
-    )
+        <Provider store={store}>
+            <BrowserRouter basename="/">
+                <Header/>
+                <Switch>
+                    <Route exact path="/">
+                        <h1>Паркуйтесь с удовольствием!</h1>
+                        <Parking/>
+                    </Route>
+
+                    <Route exact path="/about">
+                        <About/>
+                    </Route>
+
+                    <Route exact path="/parking/:parking_pk">
+                        <CurrentParking/>
+                    </Route>
+
+                </Switch>
+            </BrowserRouter>
+        </Provider>
+
+    );
 }
-
-
-export default About
+export default App;
